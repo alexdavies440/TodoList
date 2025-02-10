@@ -6,11 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Task {
-
-    @Id
-    @GeneratedValue
-    private int id;
+public class Task extends AbstractEntity {
 
     private String description;
 
