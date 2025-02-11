@@ -31,4 +31,10 @@ public class TaskController {
         taskRepository.deleteById(id);
     }
 
+    @PostMapping("/add")
+    public void addTask(@RequestBody String description) {
+        Task newTask = new Task(description);
+        taskRepository.save(newTask);
+    }
+
 }
