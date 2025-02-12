@@ -21,8 +21,6 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public List<Task> getTasks() {
-//        Task dummyTask = new Task("Dummy task");
-//        taskRepository.save(dummyTask);
         return taskRepository.findAll();
     }
 

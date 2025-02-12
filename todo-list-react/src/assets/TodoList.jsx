@@ -1,67 +1,39 @@
 import { useState, useEffect } from "react";
+import DeleteButton from "./DeleteButton";
+import AddButton from "./AddNewTask";
 
-export default function Test() {
+export default function TodoList() {
 
     const url = 'http://localhost:8080/tasks';
 
-    const del = 'http://localhost:8080/delete';
+    const [taskData, setTaskData] = useState([]);
 
-    const add = 'http://localhost:8080/add';
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [serverData, setServerData] = useState([]);
-
-    const [task, setTask] = useState("");
-
+    // Need to set state outside useEffect to prevent infinite loop
     useEffect(() => {
+
+        setIsLoading(true);
         fetch(url)
-        .then(res => res.json())
-        .then(data => setServerData(data));
+            .then(res => res.json())
+            .then(data => setTaskData(data))
+            .then(setIsLoading(false));
+            
     }, []);
-    
 
-    function deleteItem(int) {
-        fetch(del, {
-            method: "POST",
-            body: int,
-            headers: {
-                "Content-type": "application/json;"
-            }
-        })
-        .then(res => res.json())
-        .then(data => setServerData(data));
-    }
-
-    function handleItemChange(event) {
-        setTask(event.target.value);
-    }
-
-    function addItem(desc) {
-        fetch(add, {
-            method: "POST",
-            body: desc,
-            headers: {
-                "Content-type": "application/json;"
-            }
-        })
-        .then(res => res.json())
-        .then(data => setServerData(data));
-    }
-
-    return(
+    return (
         <div>
             <h1>To-Do List</h1>
             <hr />
+            <AddButton />
+            {taskData && taskData.map((item, index) =>
 
-            <input onChange={handleItemChange} type="text" value={task}/>
-            <button onClick={() => addItem(task)}>add</button>
-            <div>{serverData.map((item, index) => 
-
-                    <div key={index}>
+                <div key={index}>
                     <h3>{item.description}</h3>
-                    <button onClick={() => deleteItem(item.id)}>delete</button>      
-            </div>
-                
-            )}</div>
+                    <DeleteButton id={item.id} />
+                </div>
+            )}
+            {isLoading &&<div>Loading...</div>}
         </div>
     );
 }
