@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function AddNewTask({setTaskData}) {
+export default function AddNewTask(props) {
 
     const add = 'http://localhost:8080/add';
 
@@ -24,7 +24,7 @@ export default function AddNewTask({setTaskData}) {
     function handleSubmit(event) {
         event.preventDefault();
         addTask();
-        setTaskData(currentTasks => {
+        props.setTaskData(currentTasks => {
             return [...currentTasks, {"description": newTask}];
         })
         setNewTask("");

@@ -12,15 +12,16 @@ export default function TodoList() {
 
     const testArray = [{"description": "dog"}, {"description": "cat"}, {"description": "horse"}];
 
-    // Need to set state outside useEffect to prevent infinite loop
-    useEffect(() => {
-
+    function fetchData() {
         setIsLoading(true);
         fetch(url)
             .then(res => res.json())
             .then(data => setTaskData(data))
             .then(setIsLoading(false));
-
+    }
+    // Need to set state outside useEffect to prevent infinite loop
+    useEffect(() => {
+        fetchData();
     }, []);
 
     function taskToUpperCase(task) {
@@ -31,7 +32,7 @@ export default function TodoList() {
         <div>
             <h1>To-Do List</h1>
             <hr />
-            <AddButton setTaskData={setTaskData} />
+            <AddButton setTaskData={setTaskData} fetchData={fetchData}/>
             {taskData && taskData.map((item, index) =>
 
                 <div key={index}>
