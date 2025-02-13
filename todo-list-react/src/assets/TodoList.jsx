@@ -18,14 +18,14 @@ export default function TodoList() {
             .then(res => res.json())
             .then(data => setTaskData(data))
             .then(setIsLoading(false));
-            
+
     }, []);
 
     return (
         <div>
             <h1>To-Do List</h1>
             <hr />
-            <AddButton />
+            <AddButton setTaskData={setTaskData} />
             {taskData && taskData.map((item, index) =>
 
                 <div key={index}>

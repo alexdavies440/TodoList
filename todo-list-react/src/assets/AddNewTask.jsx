@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function AddNewTask() {
+export default function AddNewTask({setTaskData}) {
 
     const add = 'http://localhost:8080/add';
 
@@ -21,9 +21,18 @@ export default function AddNewTask() {
         })
     }
 
+    function handleSubmit(event) {
+        event.preventDefault();
+        addTask();
+        setTaskData(currentTasks => {
+            return [...currentTasks, {"description": newTask}];
+        })
+        setNewTask("");
+    }
+
     return (
         <div>
-            <form action="" onSubmit={() => addTask()}>
+            <form action="" onSubmit={handleSubmit}>
                 <input type="text" onChange={handleInputChange} value={newTask} />
                 <button>add</button>
             </form>
