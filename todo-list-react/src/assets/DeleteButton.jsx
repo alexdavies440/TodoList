@@ -2,23 +2,28 @@
 
 export default function DeleteButton(props) {
 
-    const del = 'http://localhost:8080/delete';
+    const deleteUrl = 'http://localhost:8080/tasks/';
+
+    const url = 'http://localhost:8080/tasks';
+
 
     function deleteTask() {
-        fetch(del, {
-            method: "POST",
-            body: props.id,
+        fetch(deleteUrl + props.id, {
+            method: "DELETE",
             headers: {
                 "Content-type": "application/json;"
             }
-        })
+        }).then(() => console.log("Task deleted"));
     }
 
     function handleSubmit(event) {
         event.preventDefault();
         deleteTask();
-        const updatedTasks = props.taskData.filter((object) => object.id !== props.id);
-        props.setTaskData(updatedTasks);
+        setTimeout(() => {
+            fetch(url)
+            .then(res => res.json())
+            .then(data => props.setTaskData(data))
+        }, 50);
     }
 
     return (
