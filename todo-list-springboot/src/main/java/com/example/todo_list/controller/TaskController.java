@@ -25,14 +25,9 @@ public class TaskController {
     }
 
     @DeleteMapping("/tasks/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void deleteTask(@PathVariable("id") int id) {
         taskRepository.deleteById(id);
     }
-
-//    @PostMapping("/delete")
-//    public void deleteTask(@RequestBody int id) {
-//        taskRepository.deleteById(id);
-//    }
 
     @PostMapping("/add")
     public void addTask(@RequestBody String description) {

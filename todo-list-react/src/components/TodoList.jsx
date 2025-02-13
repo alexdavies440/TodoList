@@ -29,19 +29,21 @@ export default function TodoList() {
     }
 
     return (
-        <div>
+        <div className="todo-list">
             <h1>To-Do List</h1>
-            <hr />
             <AddButton setTaskData={setTaskData} taskData={taskData}/>
-            {taskData && taskData.map((item) =>
-
-                <div key={item.id}>
-                    <h3>{taskToUpperCase(item.description)}</h3>
-                    <DeleteButton id={item.id} taskData={taskData} setTaskData={setTaskData}/>
-                </div>
-            )}
+            <ol>
+                {taskData && taskData.map((item) => {
+                    return (
+                        <li key={item.id}>
+                            <span className="text">{taskToUpperCase(item.description)}</span>
+                            <DeleteButton id={item.id} taskData={taskData} setTaskData={setTaskData}/>
+                        </li>
+                    );
+                })}
+            </ol>
+            
             {isLoading &&<div>Loading...</div>}
-            {taskData.length === 0 && <h2>Add a task...</h2>}
         </div>
     );
 }

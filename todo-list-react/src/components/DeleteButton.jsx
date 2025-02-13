@@ -29,7 +29,7 @@ export default function DeleteButton(props) {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <button>delete</button>
+                <button className="delete-button">delete</button>
             </form>
         </div>
     );
