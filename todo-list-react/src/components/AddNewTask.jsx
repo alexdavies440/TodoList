@@ -33,7 +33,7 @@ export default function AddNewTask(props) {
         <div>
             <form action="" onSubmit={handleSubmit}>
                 <input type="text" placeholder="Enter a task..." onChange={handleInputChange} value={newTask} />
-                <button className="add-button">add</button>
+                <button className="add-button">➕</button>
             </form>
         </div>
     );
