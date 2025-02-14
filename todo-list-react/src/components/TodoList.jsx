@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DeleteButton from "./DeleteButton";
-import AddButton from "./AddNewTask";
+import AddNewTask from "./AddNewTask";
 
 export default function TodoList() {
 
@@ -31,13 +31,13 @@ export default function TodoList() {
     return (
         <div className="todo-list">
             <h1>To-Do List</h1>
-            <AddButton setTaskData={setTaskData} taskData={taskData}/>
+            <AddNewTask taskData={taskData} setTaskData={setTaskData} fetchData={fetchData}/>
             <ol>
                 {taskData && taskData.map((item) => {
                     return (
                         <li key={item.id}>
                             <span className="text">{taskToUpperCase(item.description)}</span>
-                            <DeleteButton id={item.id} taskData={taskData} setTaskData={setTaskData}/>
+                            <DeleteButton id={item.id} taskData={taskData} setTaskData={setTaskData} fetchData={fetchData}/>
                         </li>
                     );
                 })}

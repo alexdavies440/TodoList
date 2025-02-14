@@ -4,8 +4,6 @@ export default function AddNewTask(props) {
 
     const add = 'http://localhost:8080/add';
 
-    const url = 'http://localhost:8080/tasks';
-
     const [newTask, setNewTask] = useState("");
 
     function handleInputChange(event) {
@@ -21,19 +19,13 @@ export default function AddNewTask(props) {
                 headers: {
                     "Content-type": "application/json;"
                 }
-            }).then(() => console.log("Task added"));
+            }).then(() => props.fetchData());
         }
     }
 
     function handleSubmit(event) {
         event.preventDefault();
         addTask();
-        setTimeout(() => {
-            fetch(url)
-            .then(res => res.json())
-            .then(data => props.setTaskData(data))
-        }, 50);
-        
         setNewTask("");
     }
 
