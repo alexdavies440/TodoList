@@ -1,6 +1,7 @@
 package com.example.todo_list.controller;
 
 import com.example.todo_list.data.TaskRepository;
+import com.example.todo_list.model.Priority;
 import com.example.todo_list.model.Task;
 import com.example.todo_list.model.TaskDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class TaskController {
 
     @PostMapping("/add")
     public void addTask(@RequestBody String description) {
-        Task newTask = new Task(description);
+        Task newTask = new Task(description, Priority.MEDIUM);
         taskRepository.save(newTask);
     }
 

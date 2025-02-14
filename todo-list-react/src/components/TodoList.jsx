@@ -32,16 +32,17 @@ export default function TodoList() {
         <div className="todo-list">
             <h1>To-Do List</h1>
             <AddNewTask taskData={taskData} setTaskData={setTaskData} fetchData={fetchData}/>
-            <ol>
+            <ul>
                 {taskData && taskData.map((item) => {
                     return (
                         <li key={item.id}>
                             <span className="text">{taskToUpperCase(item.description)}</span>
+                            Priority: {item.priority.toLowerCase()}
                             <DeleteButton id={item.id} taskData={taskData} setTaskData={setTaskData} fetchData={fetchData}/>
                         </li>
                     );
                 })}
-            </ol>
+            </ul>
             
             {isLoading &&<div>Loading...</div>}
         </div>
