@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import DeleteButton from "./DeleteButton";
 import AddNewTask from "./AddNewTask";
+import Priority from "./Priority";
 
 export default function TodoList() {
 
@@ -37,7 +38,7 @@ export default function TodoList() {
                     return (
                         <li key={item.id}>
                             <span className="text">{taskToUpperCase(item.description)}</span>
-                            Priority: {item.priority.toLowerCase()}
+                            <Priority id={item.id} priority={item.priority} fetchData={fetchData}/>
                             <DeleteButton id={item.id} taskData={taskData} setTaskData={setTaskData} fetchData={fetchData}/>
                         </li>
                     );
