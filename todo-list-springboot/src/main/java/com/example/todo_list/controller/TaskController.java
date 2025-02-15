@@ -36,7 +36,7 @@ public class TaskController {
         taskRepository.save(newTask);
     }
 
-    @PostMapping("/tasks/priority/{id}")
+    @PostMapping("/priority/{id}")
     public void updatePriority(@PathVariable("id") int id, @RequestBody Priority newPriority) {
 
         Optional<Task> optTask = taskRepository.findById(id);
