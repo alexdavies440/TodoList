@@ -4,16 +4,35 @@ import Priority from "./Priority";
 
 export default function ListItem(props) {
 
+    // const draggedTask = useRef(0);
+    // const draggedOverTask = useRef(0);
+
+    // function handleSwap() {
+    //     const updatedTasks = [...props.taskData];
+    //     [updatedTasks[draggedTask.current], updatedTasks[draggedOverTask.current]] =
+    //         [updatedTasks[draggedOverTask.current], updatedTasks[draggedTask.current]];
+    //     props.setTaskData(updatedTasks);
+    //     console.log(updatedTasks);
+    // }
+
+    function taskToUpperCase(task) {
+        return task.charAt(0).toUpperCase() + task.slice(1);
+    }
+
     return (
-        <li
-            key={props.item.id}>
-            <span className="text">{props.taskToUpperCase(props.item.description)}</span>
+        <>
+            <span className="drag">≣&nbsp;&nbsp;</span>
+            <span className="text">{taskToUpperCase(props.item.description)}</span>
             <Priority
-                id={props.item.id}
-                priority={props.item.priority} />
+                id={props.id}
+                priority={props.item.priority}
+            />
             <DeleteButton
-                id={props.item.id}
-                fetchData={props.fetchData} />
-        </li>
+                id={props.id}
+                fetchData={props.fetchData}
+            />
+        </>
+
+
     );
 }

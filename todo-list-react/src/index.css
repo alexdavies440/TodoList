@@ -112,3 +112,10 @@ select {
   border-radius: 20px;
   color: black;
 }
+
+.drag {
+  font-size: 3rem;
+  font-weight: normal;
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, 0.3);
+}

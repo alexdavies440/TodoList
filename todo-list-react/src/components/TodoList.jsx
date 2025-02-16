@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import DeleteButton from "./DeleteButton";
+import { useState, useEffect, useRef } from "react";
 import AddNewTask from "./AddNewTask";
-import Priority from "./Priority";
 import ListItem from "./ListItem";
 
 export default function TodoList() {
@@ -16,6 +14,17 @@ export default function TodoList() {
         fetchData();
     }, []);
 
+    const draggedTask = useRef(0);
+    const draggedOverTask = useRef(0);
+
+    function handleSwap() {
+        const updatedTasks = [...taskData];
+        [updatedTasks[draggedTask.current], updatedTasks[draggedOverTask.current]] =
+            [updatedTasks[draggedOverTask.current], updatedTasks[draggedTask.current]];
+        setTaskData(updatedTasks);
+        console.log(updatedTasks);
+    }
+
     function fetchData() {
         setIsLoading(true);
         fetch(url)
@@ -24,13 +33,6 @@ export default function TodoList() {
             .then(setIsLoading(false));
     }
 
-    function taskToUpperCase(task) {
-        return task.charAt(0).toUpperCase() + task.slice(1);
-    }
-
-    // Possibly create three arrays using filter and map each one to group by priority. 
-    // Maybe make a component for this. This might impact abiliy to re-order by dragging though 
-
     return (
         <div className="todo-list">
             <h1>To-Do List</h1>
@@ -38,10 +40,23 @@ export default function TodoList() {
             <ul>
                 {taskData && taskData.map((item) => {
                     return (
-                        <ListItem
-                            item={item}
-                            fetchData={fetchData}
-                            taskToUpperCase={taskToUpperCase} />
+                        <li
+                            key={item.id}
+                            draggable
+                            onDragStart={() => draggedTask.current = item.id}
+                            onDragEnter={() => draggedOverTask.current = item.id}
+                            onDragEnd={handleSwap}
+                            onDragOver={(event) => event.preventDefault()}
+                        >
+                            <ListItem
+                                item={item}
+                                id={item.id}
+                                taskData={taskData}
+                                setTaskData={setTaskData}
+                                fetchData={fetchData}
+                            />
+                        </li>
+
                     );
                 })}
             </ul>
