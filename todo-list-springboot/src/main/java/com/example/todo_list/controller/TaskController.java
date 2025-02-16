@@ -25,6 +25,11 @@ public class TaskController {
         return taskRepository.findAll();
     }
 
+//    @PostMapping("/tasks")
+//    public void updateTasks(@RequestBody List<Task> updatedTasks) {
+//
+//    }
+
     @DeleteMapping("/tasks/{id}")
     public void deleteTask(@PathVariable("id") int id) {
         taskRepository.deleteById(id);

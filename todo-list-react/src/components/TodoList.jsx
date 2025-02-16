@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import DeleteButton from "./DeleteButton";
 import AddNewTask from "./AddNewTask";
-import ListItem from "./ListItem";
+import Priority from "./Priority";
 
 export default function TodoList() {
 
     const url = 'http://localhost:8080/tasks';
-
     const [taskData, setTaskData] = useState([]);
-
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -33,6 +32,10 @@ export default function TodoList() {
             .then(setIsLoading(false));
     }
 
+    function taskToUpperCase(task) {
+        return task.charAt(0).toUpperCase() + task.slice(1);
+    }
+
     return (
         <div className="todo-list">
             <h1>To-Do List</h1>
@@ -48,15 +51,16 @@ export default function TodoList() {
                             onDragEnd={handleSwap}
                             onDragOver={(event) => event.preventDefault()}
                         >
-                            <ListItem
-                                item={item}
+                            <span className="text">{taskToUpperCase(item.description)}</span>
+                            <Priority
                                 id={item.id}
-                                taskData={taskData}
-                                setTaskData={setTaskData}
+                                priority={item.priority}
+                            />
+                            <DeleteButton
+                                id={item.id}
                                 fetchData={fetchData}
                             />
                         </li>
-
                     );
                 })}
             </ul>
