@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import DeleteButton from "./DeleteButton";
 import AddNewTask from "./AddNewTask";
 import Priority from "./Priority";
+import TimeRequired from "./TimeRequired";
 
 export default function TodoList() {
     
@@ -23,7 +24,8 @@ export default function TodoList() {
         
         const updatedTasks = [...taskData];
 
-        [updatedTasks[index1].listIndex, updatedTasks[index2].listIndex] = [updatedTasks[index2].listIndex, updatedTasks[index1].listIndex];
+        [updatedTasks[index1].listIndex, updatedTasks[index2].listIndex] = 
+        [updatedTasks[index2].listIndex, updatedTasks[index1].listIndex];
         console.log(updatedTasks);
         setTaskData(updatedTasks);
             
@@ -68,6 +70,11 @@ export default function TodoList() {
                         >
                             <span className="drag">≣&nbsp;&nbsp;</span>
                             <span className="text">{taskToUpperCase(item.description)}</span>
+
+                            <TimeRequired 
+                                id={item.id}
+                                timeRequiredMinutes={item.timeRequiredMinutes}
+                            />
                             <Priority
                                 id={item.id}
                                 priority={item.priority}

@@ -50,7 +50,7 @@ public class TaskController {
 
     @PostMapping("/add")
     public void addTask(@RequestBody String description) {
-        Task newTask = new Task(description, Priority.MEDIUM);
+        Task newTask = new Task(description, Priority.MEDIUM, 15);
         taskRepository.save(newTask);
         newTask.setListIndex(newTask.getId());
         taskRepository.save(newTask);
@@ -64,6 +64,18 @@ public class TaskController {
         if (optTask.isPresent()) {
             Task task = optTask.get();
             task.setPriority(newPriority);
+            taskRepository.save(task);
+        }
+    }
+
+    @PostMapping("/timeRequired/{id}")
+    public void updateTimeRequired(@PathVariable int id, @RequestBody int timeRequired) {
+
+        Optional<Task> optTask = taskRepository.findById(id);
+
+        if (optTask.isPresent()) {
+            Task task = optTask.get();
+            task.setTimeRequiredMinutes(timeRequired);
             taskRepository.save(task);
         }
     }

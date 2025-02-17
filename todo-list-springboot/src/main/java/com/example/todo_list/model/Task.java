@@ -9,12 +9,20 @@ public class Task extends AbstractEntity {
 
     private Priority priority;
 
-    public Task(String description, Priority priority) {
+    private int timeRequiredMinutes;
+
+    public Task(String description, Priority priority, int timeRequiredMinutes) {
         this.description = description;
         this.priority = priority;
+        this.timeRequiredMinutes = timeRequiredMinutes;
     }
 
     public Task() {}
+
+    @Override
+    public String toString() {
+        return description;
+    }
 
     public String getDescription() {
         return description;
@@ -32,8 +40,11 @@ public class Task extends AbstractEntity {
         this.priority = priority;
     }
 
-    @Override
-    public String toString() {
-        return description;
+    public int getTimeRequiredMinutes() {
+        return timeRequiredMinutes;
+    }
+
+    public void setTimeRequiredMinutes(int timeRequiredMinutes) {
+        this.timeRequiredMinutes = timeRequiredMinutes;
     }
 }
