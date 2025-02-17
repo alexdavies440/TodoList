@@ -1,6 +1,5 @@
 package com.example.todo_list;
 
-import com.example.todo_list.model.Task;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
