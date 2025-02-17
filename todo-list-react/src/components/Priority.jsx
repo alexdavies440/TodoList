@@ -1,4 +1,6 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 
 export default function Priority(props) {
 
@@ -31,4 +33,9 @@ export default function Priority(props) {
             </select>
         </div>
     );
+}
+
+Priority.propTypes = {
+    id: PropTypes.number,
+    priority: PropTypes.string
 }

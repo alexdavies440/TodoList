@@ -1,4 +1,6 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 
 
 export default function TimeRequired(props) {
@@ -8,6 +10,7 @@ export default function TimeRequired(props) {
     const timeRequiredUrl = 'http://localhost:8080/timeRequired/'
 
     function handleChange(event) {
+
         setTimeRequiredMinutes(event.target.value);
         
         fetch(timeRequiredUrl + props.id, {
@@ -32,4 +35,9 @@ export default function TimeRequired(props) {
             </label>
         </div>
     );
+}
+
+TimeRequired.propTypes = {
+    id: PropTypes.number,
+    timeRequiredMinutes: PropTypes.number
 }

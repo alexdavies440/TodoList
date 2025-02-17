@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 export default function AddNewTask(props) {
 
@@ -43,4 +44,8 @@ export default function AddNewTask(props) {
             </form>
         </div>
     );
+}
+
+AddNewTask.propTypes = {
+    fetchData: PropTypes.func
 }
