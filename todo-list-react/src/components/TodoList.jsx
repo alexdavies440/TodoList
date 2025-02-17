@@ -40,13 +40,16 @@ export default function TodoList() {
         setIsLoading(true);
         fetch(url)
             .then(res => res.json())
-            .then(data => setTaskData(data.sort()))
+            .then(data => setTaskData(data))
             .then(setIsLoading(false));
     }
 
     function taskToUpperCase(task) {
         return task.charAt(0).toUpperCase() + task.slice(1);
     }
+    
+    taskData.sort((a, b) => a.listIndex - b.listIndex);
+
 
     return (
         <div className="todo-list">
@@ -56,7 +59,7 @@ export default function TodoList() {
                 {taskData && taskData.map((item, index) => {
                     return (
                         <li
-                            key={item.listIndex}
+                            key={item.id}
                             draggable
                             onDragStart={() => (draggedTaskIndex.current = index)}
                             onDragEnter={() => (draggedOverTaskIndex.current = index)}
