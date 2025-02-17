@@ -10,6 +10,8 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,23 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public List<Task> getTasks() {
-        return taskRepository.findAll();
+        return (List<Task>) taskRepository.findAll();
+    }
+
+    @PostMapping("/update")
+    public void updateTask(@RequestBody Task[] newTasks) {
+
+        for (Task newTask : newTasks) {
+            if (newTask != null) {
+                Optional<Task> optTask = taskRepository.findById(newTask.getId());
+
+                if (optTask.isPresent()) {
+                    Task task = optTask.get();
+                    task.setListIndex(newTask.getListIndex());
+                    taskRepository.save(task);
+                }
+            }
+        }
     }
 
     @DeleteMapping("/tasks/{id}")
@@ -32,7 +50,9 @@ public class TaskController {
 
     @PostMapping("/add")
     public void addTask(@RequestBody String description) {
-        Task newTask = new Task(description, Priority.MEDIUM);
+        Task newTask = new Task(description, Priority.MEDIUM, 15);
+        taskRepository.save(newTask);
+        newTask.setListIndex(newTask.getId());
         taskRepository.save(newTask);
     }
 
@@ -44,6 +64,18 @@ public class TaskController {
         if (optTask.isPresent()) {
             Task task = optTask.get();
             task.setPriority(newPriority);
+            taskRepository.save(task);
+        }
+    }
+
+    @PostMapping("/timeRequired/{id}")
+    public void updateTimeRequired(@PathVariable int id, @RequestBody int timeRequired) {
+
+        Optional<Task> optTask = taskRepository.findById(id);
+
+        if (optTask.isPresent()) {
+            Task task = optTask.get();
+            task.setTimeRequiredMinutes(timeRequired);
             taskRepository.save(task);
         }
     }

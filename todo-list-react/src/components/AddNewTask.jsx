@@ -32,7 +32,13 @@ export default function AddNewTask(props) {
     return (
         <div>
             <form action="" onSubmit={handleSubmit}>
-                <input type="text" placeholder="Enter a task..." onChange={handleInputChange} value={newTask} />
+                <label htmlFor="newTaskField"></label>
+                <input 
+                type="text" name="newTaskField" 
+                placeholder="Enter a task..." 
+                onChange={handleInputChange} 
+                value={newTask} 
+                />
                 <button className="add-button">➕</button>
             </form>
         </div>
