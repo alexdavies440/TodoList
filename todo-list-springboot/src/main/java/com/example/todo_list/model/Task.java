@@ -31,4 +31,9 @@ public class Task extends AbstractEntity {
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }

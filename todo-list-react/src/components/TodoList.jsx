@@ -4,31 +4,43 @@ import AddNewTask from "./AddNewTask";
 import Priority from "./Priority";
 
 export default function TodoList() {
-
-    const url = 'http://localhost:8080/tasks';
+    
     const [taskData, setTaskData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const draggedTaskIndex = useRef(0);
+    const draggedOverTaskIndex = useRef(0);
 
     useEffect(() => {
         fetchData();
     }, []);
 
-    const draggedTask = useRef(0);
-    const draggedOverTask = useRef(0);
+    const url = 'http://localhost:8080/tasks';
+    const update = 'http://localhost:8080/update';
 
-    function handleSwap() {
+
+    function handleSwap(index1, index2) {
+        
         const updatedTasks = [...taskData];
-        [updatedTasks[draggedTask.current], updatedTasks[draggedOverTask.current]] =
-            [updatedTasks[draggedOverTask.current], updatedTasks[draggedTask.current]];
-        setTaskData(updatedTasks);
+
+        [updatedTasks[index1].listIndex, updatedTasks[index2].listIndex] = [updatedTasks[index2].listIndex, updatedTasks[index1].listIndex];
         console.log(updatedTasks);
+        setTaskData(updatedTasks);
+            
+        fetch(update, {
+            method: "POST",
+            body: JSON.stringify(taskData),
+            headers: {
+                "Content-type": "application/json;"
+            }
+        })
     }
 
     function fetchData() {
         setIsLoading(true);
         fetch(url)
             .then(res => res.json())
-            .then(data => setTaskData(data))
+            .then(data => setTaskData(data.sort()))
             .then(setIsLoading(false));
     }
 
@@ -41,16 +53,17 @@ export default function TodoList() {
             <h1>To-Do List</h1>
             <AddNewTask fetchData={fetchData} />
             <ul>
-                {taskData && taskData.map((item) => {
+                {taskData && taskData.map((item, index) => {
                     return (
                         <li
-                            key={item.id}
+                            key={item.listIndex}
                             draggable
-                            onDragStart={() => draggedTask.current = item.id}
-                            onDragEnter={() => draggedOverTask.current = item.id}
-                            onDragEnd={handleSwap}
+                            onDragStart={() => (draggedTaskIndex.current = index)}
+                            onDragEnter={() => (draggedOverTaskIndex.current = index)}
+                            onDragEnd={() => handleSwap(draggedTaskIndex.current, draggedOverTaskIndex.current)}
                             onDragOver={(event) => event.preventDefault()}
                         >
+                            <span className="drag">≣&nbsp;&nbsp;</span>
                             <span className="text">{taskToUpperCase(item.description)}</span>
                             <Priority
                                 id={item.id}
