@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 
 export default function DeleteButton(props) {
 
@@ -25,4 +25,9 @@ export default function DeleteButton(props) {
             </form>
         </div>
     );
+}
+
+DeleteButton.propTypes = {
+    id: PropTypes.number,
+    fetchData: PropTypes.func
 }

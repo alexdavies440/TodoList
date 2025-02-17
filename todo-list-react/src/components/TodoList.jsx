@@ -5,7 +5,7 @@ import Priority from "./Priority";
 import TimeRequired from "./TimeRequired";
 
 export default function TodoList() {
-    
+
     const [taskData, setTaskData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -21,14 +21,14 @@ export default function TodoList() {
 
 
     function handleSwap(index1, index2) {
-        
+
         const updatedTasks = [...taskData];
 
-        [updatedTasks[index1].listIndex, updatedTasks[index2].listIndex] = 
-        [updatedTasks[index2].listIndex, updatedTasks[index1].listIndex];
+        [updatedTasks[index1].listIndex, updatedTasks[index2].listIndex] =
+            [updatedTasks[index2].listIndex, updatedTasks[index1].listIndex];
         console.log(updatedTasks);
         setTaskData(updatedTasks);
-            
+
         fetch(update, {
             method: "POST",
             body: JSON.stringify(taskData),
@@ -49,7 +49,7 @@ export default function TodoList() {
     function taskToUpperCase(task) {
         return task.charAt(0).toUpperCase() + task.slice(1);
     }
-    
+
     taskData.sort((a, b) => a.listIndex - b.listIndex);
 
 
@@ -71,7 +71,7 @@ export default function TodoList() {
                             <span className="drag">≣&nbsp;&nbsp;</span>
                             <span className="text">{taskToUpperCase(item.description)}</span>
 
-                            <TimeRequired 
+                            <TimeRequired
                                 id={item.id}
                                 timeRequiredMinutes={item.timeRequiredMinutes}
                             />
