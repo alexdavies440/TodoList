@@ -26,7 +26,7 @@ export default function TodoList() {
 
         [updatedTasks[index1].listIndex, updatedTasks[index2].listIndex] =
             [updatedTasks[index2].listIndex, updatedTasks[index1].listIndex];
-        console.log(updatedTasks);
+            
         setTaskData(updatedTasks);
 
         fetch(update, {
